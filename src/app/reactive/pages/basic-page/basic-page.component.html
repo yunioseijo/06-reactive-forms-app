@@ -12,10 +12,10 @@
                            class="form-control"
                            placeholder="Nombre del producto"
                            formControlName="name">
-                    @if (isValidField('name')) {
+                    @if (formUtils.isValidField(myForm,'name')) {
                       <span class="form-text text-danger">
                           <!-- Debe de ser de 3 letras -->
-                          error message
+                          {{formUtils.getFiledError(myForm,'name')}}
                       </span>
                     }
                 </div>
@@ -29,9 +29,13 @@
                            class="form-control"
                            placeholder="Precio del producto"
                            formControlName="price">
-                    <span class="form-text text-danger">
-                        El precio debe de ser 0 o mayor
-                    </span>
+                    @if (formUtils.isValidField(myForm,'price')) {
+                      <span class="form-text text-danger">
+                          <!-- Debe de ser mayor a 0 -->
+                          {{formUtils.getFiledError(myForm,'price')}}
+                      </span>
+                    }
+
                 </div>
             </div>
 
@@ -44,9 +48,12 @@
                            placeholder="Existencias del producto"
                            formControlName="inStorage">
 
-                    <span class="form-text text-danger">
-                         Las existencias deben de ser 0 o mayor
-                    </span>
+                           @if (formUtils.isValidField(myForm,'inStorage')) {
+                            <span class="form-text text-danger">
+                                <!-- Debe de ser mayor a 0 -->
+                                {{formUtils.getFiledError(myForm,'inStorage')}}
+                            </span>
+                          }
                 </div>
             </div>
 
