@@ -1,7 +1,7 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr>
 
-<form autocomplete="off" [formGroup]="myForm"
+<form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSubmit()">
      >
 
     <!-- Nombre -->
@@ -27,7 +27,9 @@
 
             <div class="input-group">
                 <input class="form-control"
-                       placeholder="Agregar favorito">
+                       placeholder="Agregar favorito"
+                       [formControl]="newFavorite"
+                       (keydown.enter)="onAddToFavorites()">
 
 
                 <button class="btn btn-outline-primary"
@@ -52,7 +54,8 @@
                     [formControlName]="i"
                     >
                     <button class="btn btn-outline-danger"
-                            type="button">
+                            type="button"
+                            (click)="onDeleteFavorite(i)">
                       Eliminar
                   </button>
                 </div>
@@ -62,6 +65,11 @@
                   </span>
                 }
             </div>
+            }
+            @if(favoriteGames.length < 2) {
+              <span class="form-text text-danger">
+                  Debe tener al menos 2 juegos favoritos
+              </span>
             }
 
         </div>
