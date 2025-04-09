@@ -15,7 +15,7 @@
                     @if (formUtils.isValidField(myForm,'name')) {
                       <span class="form-text text-danger">
                           <!-- Debe de ser de 3 letras -->
-                          {{formUtils.getFiledError(myForm,'name')}}
+                          {{formUtils.getFieldError(myForm,'name')}}
                       </span>
                     }
                 </div>
@@ -32,7 +32,7 @@
                     @if (formUtils.isValidField(myForm,'price')) {
                       <span class="form-text text-danger">
                           <!-- Debe de ser mayor a 0 -->
-                          {{formUtils.getFiledError(myForm,'price')}}
+                          {{formUtils.getFieldError(myForm,'price')}}
                       </span>
                     }
 
@@ -51,7 +51,7 @@
                            @if (formUtils.isValidField(myForm,'inStorage')) {
                             <span class="form-text text-danger">
                                 <!-- Debe de ser mayor a 0 -->
-                                {{formUtils.getFiledError(myForm,'inStorage')}}
+                                {{formUtils.getFieldError(myForm,'inStorage')}}
                             </span>
                           }
                 </div>
