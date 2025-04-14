@@ -30,6 +30,9 @@ export class FormUtils {
         case 'emailTaken':
           return 'El correo ya está en uso';
 
+        case 'notStrider':
+          return 'El nombre no puede ser Strider';
+
         case 'pattern':
           if(errors['pattern'].requiredPattern === FormUtils.namePattern) {
             return 'El nombre no es válido. Debe contener al menos un nombre y un apellido.';
@@ -92,6 +95,10 @@ export class FormUtils {
       return { emailTaken: true }; // Simulando un error de email existente
     }
     return null; // Retornar null después de la simulación
+  }
+  static notStrider(control: AbstractControl): ValidationErrors | null {
+    const value = control.value?.trim().toLowerCase() ?? '';
+    return (value === 'strider')? { notStrider: true } : null;
   }
 }
 
