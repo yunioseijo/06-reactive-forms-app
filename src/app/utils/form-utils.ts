@@ -1,7 +1,11 @@
-import { FormArray, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, ValidationErrors } from '@angular/forms';
 
 export class FormUtils {
   // Expresiones regulares
+  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
+  static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+  static passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$';
 
   static getTextError(errors: ValidationErrors) {
     for (const key of Object.keys(errors)) {
@@ -14,6 +18,25 @@ export class FormUtils {
 
         case 'min':
           return `Valor mínimo de ${errors['min'].min}`;
+
+        case 'email':
+          return 'El formato del correo no es válido';
+
+        case 'pattern':
+          if(errors['pattern'].requiredPattern === FormUtils.namePattern) {
+            return 'El nombre no es válido. Debe contener al menos un nombre y un apellido.';
+          }
+          if(errors['pattern'].requiredPattern === FormUtils.emailPattern) {
+            return 'El correo no es válido. Debe contener un formato de correo electrónico.';
+          }
+          if(errors['pattern'].requiredPattern === FormUtils.passwordPattern) {
+            return 'La contraseña no es válida. Debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial.';
+          }
+          return `El campo no es válido. Debe contener un formato específico.`;
+
+
+        default:
+          return `Error no controlado ${key}`;
       }
     }
 
@@ -46,6 +69,13 @@ export class FormUtils {
     const errors = formArray.controls[index].errors ?? {};
 
     return FormUtils.getTextError(errors);
+  }
+  static isFieldOneEqualFieldTwo(field1: string, field2: string) {
+    return (formGroup: AbstractControl) => {
+      const field1Value = formGroup.get(field1)?.value;
+      const field2Value = formGroup.get(field2)?.value;
+      return field1Value === field2Value ? null : { passwordNotEqual: true };
+    }
   }
 }
 
